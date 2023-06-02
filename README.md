@@ -22,6 +22,10 @@ The project repository consists of the following components:
         * 'persons_raw.csv' : samples correspond to individuals riding bicycles involved in crash events
         * 'roadway_raw.csv' : samples correspond to roadways related to crash events
      * 'zip' : a directory intended to hold .ZIP files, if you choose to download them from the original PENNDOT page
+3. Two data files in main directory, which are the output from '1_PA_bike_crashes_data.ipynb':
+    * 'cyclists.csv' : samples correspond to individuals riding bicycles involved in crash events
+    * 'crashes.csv' : samples correspond to crash events
+    
 
 ## Summary of data analysis results:
 
