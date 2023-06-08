@@ -3,9 +3,7 @@
 ## Introduction:
 In this project we'll analyze data related to crashes involving bicycles in the state of Pennsylvania during the years 2002-2021. We focus on a publically accessible dataset of crash records in the state which is made available by Pennsylvania Department of Transportation (PENNDOT).
 
-The central goal is to examine the prevalence of various aspects of vehicle crashes involving bicycles in Pennsylvania, and analyze how these factors might affect the severity of the crash from the cyclist's point of view.
-
-An additional component of the project is to perform predictive modeling on the dataset using machine learning algorithms, with the goal of predicting whether a cyclist will suffer serious injury or fatality in a particular crash event based on features of that crash event.  This component is still in progress and will be added to the repository in a future update.
+The central goal is to examine the prevalence of various aspects of vehicle crashes involving bicycles in Pennsylvania, analyze how these factors might affect the severity of the crash from the cyclist's point of view, and build and evaluate machine learning models to predict serious cyclist injury or cyclist fatality.
 
 The PENNDOT dataset, as well as related resources such as a data dictionary, can be found (https://pennshare.maps.arcgis.com/apps/webappviewer/index.html?id=8fdbf046e36e41649bbfd9d7dd7c7e7e).
 
@@ -15,6 +13,7 @@ The project repository consists of the following components:
 1. Two IPython files in the main directory:
     * 1_PA_bike_crashes_data.ipynb : A notebook which demonstrates the acquisition and cleaning of the dataset
     * 2_PA_bike_crashes_vis.ipynb : A notebook in which the data is analyzed and visualized in order to uncover patterns and inspire actions which might outcomes for cyclists
+    * 3_PA_bike_crashes_models.ipynb : A notebook in which machine learning models are developed and evaluated.  These models are classifiers designed to predict whether or not a cyclists suffered serious injury or death.
 2. 'data' folder with the following subfolders:
     * 'raw_csv' : a directory containing four .CSV files which are processed in the first notebook
         * 'bicycles_raw.csv' : samples correspond to bicycle vehicles involved in crash events
@@ -25,6 +24,7 @@ The project repository consists of the following components:
 3. Two data files in main directory, which are the output from '1_PA_bike_crashes_data.ipynb':
     * 'cyclists.csv' : samples correspond to individuals riding bicycles involved in crash events
     * 'crashes.csv' : samples correspond to crash events
+4. Several image files used in this readme file
     
 ## Summary of data analysis results:
 
@@ -62,7 +62,7 @@ We identified features in two ways:
     <figcaption align = "center">The most impactful features for the two baseline models.</figcaption>
 </figure>
 
-The left chart lists all features whose log-odds coefficient is greater than 0.25 in magnitude.  The right chart lists all features whose feature importance is greater than 0.1.  There is significant overlap in these two lists of impactful features, and they confirm many of the suspicions raised in Part II of this project.
+The first chart lists all features whose log-odds coefficient is greater than 0.25 in magnitude.  The second chart lists all features whose feature importance is greater than 0.1.  There is significant overlap in these two lists of impactful features, and they confirm many of the suspicions raised in Part II of this project.
 
 In our final models, we used the set of features which had nonzero coefficients in the L1-regularized logistic regression model.
 
