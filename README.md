@@ -72,7 +72,7 @@ After tuning hyperparameters to optimize ROC-AUC score via randomized search fiv
 * A LogisticRegression model with Elastic-Net regularization - roughly equal balance of L1 and L2 regularization - and C-value roughly equal to 0.115.
 * A HistGradientBoostingClassifer model (for its computational speed) with learning rate = 0.142, max tree depth of 2, minimum samples per leaf of 140, and L2 regularization parameter around 2.4; all other hyperparameters were left at defualt values.  We set the number of iterations to be very large, and used early stopping to end our training.
 
-The ROC-AUC score is computed based on the model's predicted probabilities, and so this process doesn't result in an optimum choice for the prediction threshold.  We selected prediction thresholds for both models which optiized the $F_3$ score, a variant of the classical $F_1$ score which considers recall of the positive class (serious cyclist injury or cyclist fatality) as three times as important as important as recall of the negative class.
+The ROC-AUC score is computed based on the model's predicted probabilities, and so this process doesn't result in an optimum choice for the prediction threshold.  We selected prediction thresholds for both models which optiized the $F_3$ score, a variant of the classical $F_1$ score which considers recall of the positive class (serious cyclist injury or cyclist fatality) as three times as important as recall of the negative class.
 
 ### Performance on the holdout test set
 
