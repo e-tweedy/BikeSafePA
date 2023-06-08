@@ -26,7 +26,6 @@ The project repository consists of the following components:
     * 'cyclists.csv' : samples correspond to individuals riding bicycles involved in crash events
     * 'crashes.csv' : samples correspond to crash events
     
-
 ## Summary of data analysis results:
 
 1. The annual counts of crashes involving cyclists in PA showed a consistent downward trend since 2004, decreasing from above 1600 incidents to below 800 incidents in 2021.  However, the annual counts or crashes involving serious cyclist injury or fatality have not declined significantly.  In fact, in 2021 there were 103 crashes involving serious cyclist injury and 24 involving cyclist death - both the highest annual counts in this 20-year dataset!
@@ -47,9 +46,50 @@ The project repository consists of the following components:
         * Speeding-related crashes on a curved roadway (44.4%)
         * Crashes involving a drinking driver on a curved roadway (42.9%)
         * Crashes on a curved roadway in dark unlit conditions (42.5%)
+        
+## Summary of machine learning model process and results
 
-## Recommendations
+We developed two types of classifier models in order to predict whether a cyclist suffered serious injury or fatality: logistic regression and gradient boosted decision tree models.  Models were evaluated on the ROC-AUC score, and then 
 
+### Feature selection
+
+We identified features in two ways:
+* Based on their log-odds coefficient values in a fitted LogistricRegression model (with purely L1 regularization, to promote sparsity of the coefficients)
+* Based on their impurity-based feature importance values in a fitted GradientBoostingClassifier model
+
+<figure>
+    <img src="coeff.png" width="20%"><img src="feat_imp.png" width="25%">
+    <figcaption align = "center">The most impactful features for the two baseline models.</figcaption>
+</figure>
+
+The left chart lists all features whose log-odds coefficient is greater than 0.25 in magnitude.  The right chart lists all features whose feature importance is greater than 0.1.  There is significant overlap in these two lists of impactful features, and they confirm many of the suspicions raised in Part II of this project.
+
+In our final models, we used the set of features which had nonzero coefficients in the L1-regularized logistic regression model.
+
+### Hyperparameter tuning
+
+After tuning hyperparameters to optimize ROC-AUC score via randomized search five-fold cross validation, our chosen models of each type were:
+* A LogisticRegression model with Elastic-Net regularization - roughly equal balance of L1 and L2 regularization - and C-value roughly equal to 0.115.
+* A HistGradientBoostingClassifer model (for its computational speed) with learning rate = 0.142, max tree depth of 2, minimum samples per leaf of 140, and L2 regularization parameter around 2.4; all other hyperparameters were left at defualt values.  We set the number of iterations to be very large, and used early stopping to end our training.
+
+The ROC-AUC score is computed based on the model's predicted probabilities, and so this process doesn't result in an optimum choice for the prediction threshold.  We selected prediction thresholds for both models which optiized the $F_3$ score, a variant of the classical $F_1$ score which considers recall of the positive class (serious cyclist injury or cyclist fatality) as three times as important as important as recall of the negative class.
+
+### Performance on the holdout test set
+
+<figure>
+<img src="roc_lr.png" width="300"><img src="conf_lr.png" width="200">
+    <figcaption align="center">The ROC curve and confusion matrix for our selected linear regression model.</figcaption>
+</figure>    
+
+<figure>
+<img src="roc_gb.png" width="300"><img src="conf_gb.png" width="200">
+    <figcaption align="center">The ROC curve and confusion matrix for our selected gradient boostied decision tree model.</figcaption>
+</figure>
+    
+When trained on the entire training set and scored on the holdout test set, both models had ROC-AUC scores in the low 70's - which generally qualifies them as 'adequate' classifiers.  Using the classification threshold values we selected in the parameter tuning phase, the linear regression model had 68% recall on the cyclists who suffered serious injury or fatality and 63% recall on those who didn't.  The gradient boosted decision tree model had 72% recall on the cyclists suffering serious injury or fatality, and 59% recall on the others.
+
+## Recommendations 
+    
 Based on my findings, I would recommend the following actions to be taken in an effort to reduce the incidence of serious cyclist injury and cyclist fatality (as well as cyclist crashes in general) in Pennsylvania:
 
 1. Bolstering cyclist education efforts regarding:
