@@ -49,7 +49,7 @@ The project repository consists of the following components:
         
 ## Summary of machine learning model process and results
 
-We developed two types of classifier models in order to predict whether a cyclist suffered serious injury or fatality: logistic regression and gradient boosted decision tree models.  Models were evaluated on the ROC-AUC score, and then 
+We developed two types of classifier models in order to predict whether a cyclist suffered serious injury or fatality: logistic regression and gradient boosted decision tree models.  Models were evaluated on the ROC-AUC score, and then prediction thresholds were chosen by analyzing $F_{\beta}$ scores.
 
 ### Feature selection
 
