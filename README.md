@@ -3,16 +3,16 @@
 ## Introduction:
 In this project we'll analyze data related to crashes involving bicycles in the state of Pennsylvania during the years 2002-2021. We focus on a publically accessible dataset of crash records in the state which is made available by Pennsylvania Department of Transportation (PENNDOT).
 
-The central goal is to examine the prevalence of various aspects of vehicle crashes involving bicycles in Pennsylvania, analyze how these factors might affect the severity of the crash from the cyclist's point of view, and build and evaluate machine learning models to predict serious cyclist injury or cyclist fatality.
+The central goals are to examine the prevalence of various aspects of vehicle crashes involving bicycles in Pennsylvania, analyze how these factors might affect the severity of the crash from the cyclist's point of view, and build and evaluate machine learning models to predict serious cyclist injury or cyclist fatality.
 
 The PENNDOT dataset, as well as related resources such as a data dictionary, can be found (https://pennshare.maps.arcgis.com/apps/webappviewer/index.html?id=8fdbf046e36e41649bbfd9d7dd7c7e7e).
 
 ## Repository contents:
 
 The project repository consists of the following components:
-1. Two IPython files in the main directory:
+1. Three IPython files in the main directory:
     * 1_PA_bike_crashes_data.ipynb : A notebook which demonstrates the acquisition and cleaning of the dataset
-    * 2_PA_bike_crashes_vis.ipynb : A notebook in which the data is analyzed and visualized in order to uncover patterns and inspire actions which might outcomes for cyclists
+    * 2_PA_bike_crashes_vis.ipynb : A notebook in which the data is analyzed and visualized in order to uncover patterns and inspire actions which might improve outcomes for cyclists
     * 3_PA_bike_crashes_models.ipynb : A notebook in which machine learning models are developed and evaluated.  These models are classifiers designed to predict whether or not a cyclists suffered serious injury or death.
 2. 'data' folder with the following subfolders:
     * 'raw_csv' : a directory containing four .CSV files which are processed in the first notebook
@@ -58,7 +58,7 @@ We identified features in two ways:
 * Based on their impurity-based feature importance values in a fitted GradientBoostingClassifier model
 
 <figure>
-    <img src="coeff.png" width="20%"><img src="feat_imp.png" width="25%">
+    <img src="coeff.png" width="35%"><img src="feat_imp.png" width="35%">
     <figcaption align = "center">The most impactful features for the two baseline models.</figcaption>
 </figure>
 
@@ -69,20 +69,20 @@ In our final models, we used the set of features which had nonzero coefficients 
 ### Hyperparameter tuning
 
 After tuning hyperparameters to optimize ROC-AUC score via randomized search five-fold cross validation, our chosen models of each type were:
-* A LogisticRegression model with Elastic-Net regularization - roughly equal balance of L1 and L2 regularization - and C-value roughly equal to 0.115.
+* A LogisticRegression model with Elastic-Net regularization - roughly equal balance of L1 and L2 regularization - and C-value (the inverse of the regularization strength) roughly equal to 0.115.
 * A HistGradientBoostingClassifer model (for its computational speed) with learning rate = 0.142, max tree depth of 2, minimum samples per leaf of 140, and L2 regularization parameter around 2.4; all other hyperparameters were left at defualt values.  We set the number of iterations to be very large, and used early stopping to end our training.
 
-The ROC-AUC score is computed based on the model's predicted probabilities, and so this process doesn't result in an optimum choice for the prediction threshold.  We selected prediction thresholds for both models which optiized the $F_3$ score, a variant of the classical $F_1$ score which considers recall of the positive class (serious cyclist injury or cyclist fatality) as three times as important as recall of the negative class.
+The ROC-AUC score is computed based on how the model's predicted probabilities affect the true positive and true negative rates at all possible prediction thresholds, and so optimizing the AUC doesn't on its own provide a choice for the best prediction threshold.  We selected prediction thresholds for both models which optiized the $F_3$ score, a variant of the classical $F_1$ score which considers recall of the positive class (serious cyclist injury or cyclist fatality) as three times as important as recall of the negative class.
 
 ### Performance on the holdout test set
 
 <figure>
-<img src="roc_lr.png" width="300"><img src="conf_lr.png" width="200">
-    <figcaption align="center">The ROC curve and confusion matrix for our selected linear regression model.</figcaption>
+<img src="roc_lr.png" width="25%"><img src="conf_lr.png" width="25%">
+    <figcaption align="center">The ROC curve and confusion matrix for our selected logistic regression model.</figcaption>
 </figure>    
 
 <figure>
-<img src="roc_gb.png" width="300"><img src="conf_gb.png" width="200">
+<img src="roc_gb.png" width="25%"><img src="conf_gb.png" width="25%">
     <figcaption align="center">The ROC curve and confusion matrix for our selected gradient boostied decision tree model.</figcaption>
 </figure>
     
