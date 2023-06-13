@@ -1,8 +1,8 @@
-# BikeSafePA: Analyzing cyclist-involved crashes in Pennsylvania, 2002-2021
+# BikeSaferPA: Analyzing cyclist-involved crashes in Pennsylvania, 2002-2021
  
-## Introduction to BikeSafePA project
+## Introduction to BikeSaferPA project
 
-In this project we'll create and evaluate **BikeSafePA**, a machine learning model which will be designed to predict whether a cyclist in a crash in Pennsylvania will suffer serious injury or fatality as a result.  We focus on a publically accessible dataset of crash records in the state during the period of 2002-2021, made available by Pennsylvania Department of Transportation (PENNDOT).
+In this project we'll create and evaluate **BikeSaferPA**, a machine learning model which will be designed to predict whether a cyclist in a crash in Pennsylvania will suffer serious injury or fatality as a result.  We focus on a publically accessible dataset of crash records in the state during the period of 2002-2021, made available by Pennsylvania Department of Transportation (PENNDOT).
 
 The central goals are to examine the prevalence of various aspects of vehicle crashes involving bicycles in Pennsylvania, analyze how these factors might affect the severity of the crash from the cyclist's point of view, and build and evaluate machine learning models to predict serious cyclist injury or cyclist fatality.
 
@@ -50,7 +50,7 @@ The project repository consists of the following components:
         
 ## Summary of machine learning model process and results
 
-In our development of BikeSafePA, we considered two families of classifier models: logistic regression and gradient boosted decision trees.  Models cadidates were evaluated on the ROC-AUC score, and then prediction thresholds were chosen by analyzing $F_{\beta}$ scores.
+In our development of BikeSaferPA, we considered two families of classifier models: logistic regression and gradient boosted decision trees.  Models cadidates were evaluated on the ROC-AUC score, and then prediction thresholds were chosen by analyzing $F_{\beta}$ scores.
 
 ### Feature selection
 
@@ -75,28 +75,28 @@ We examined several logistic regression and gradient boosted decision tree model
 
 The ROC-AUC score is computed based on how the model's predicted probabilities affect the true positive and true negative rates at all possible prediction thresholds, and so optimizing the AUC doesn't on its own provide a choice for the best prediction threshold.  We selected prediction thresholds for both models which optiized the $F_3$ score, a variant of the classical $F_1$ score which considers recall of the positive class (serious cyclist injury or cyclist fatality) as three times as important as important as recall of the negative class.
 
-##### Selecting the BikeSafePA model
+##### Selecting the BikeSaferPA model
 
-**Based on its performance with respect to ROC-AUC score, we selected the gradient boosted tree algorithm as our BikeSafePA model!**
+**Based on its performance with respect to ROC-AUC score, we selected the gradient boosted tree algorithm as our BikeSaferPA model!**
 
 <figure>
 <img src="hgb_roc.png" width="25%"><img src="hgb_conf.png" width="25%">
-    <figcaption align="center">The ROC curve and confusion matrix for the BikeSafePA classifier model.</figcaption>
+    <figcaption align="center">The ROC curve and confusion matrix for the BikeSaferPA classifier model.</figcaption>
 </figure>
     
-When trained on the entire training set and scored on the holdout test set, BikeSafePA attains ROC-AUC score of around 0.72.  Using the classification threshold values we selected in the parameter tuning phase, the model correctly classifies 68% of cyclists in the test set who suffered serious injury or fatality, and correctly classifies 64% of those who didn't.  We set the threshold to optimize the $F_3$ score, a variant of the $F_1$ score which views recall as three times as important as precision; adjusting it further could produce variants which are better at identifying cyclists at risk of serious injury or death, but they would also accumulate more false positives.  The end-user of BikeSafePA should adjust its classification threshold to accomodate the needs of their particular use case.
+When trained on the entire training set and scored on the holdout test set, BikeSaferPA attains ROC-AUC score of around 0.72.  Using the classification threshold values we selected in the parameter tuning phase, the model correctly classifies 68% of cyclists in the test set who suffered serious injury or fatality, and correctly classifies 64% of those who didn't.  We set the threshold to optimize the $F_3$ score, a variant of the $F_1$ score which views recall as three times as important as precision; adjusting it further could produce variants which are better at identifying cyclists at risk of serious injury or death, but they would also accumulate more false positives.  The end-user of BikeSaferPA should adjust its classification threshold to accomodate the needs of their particular use case.
 
-### Interpreting BikeSafePA based on SHAP values
-We computed SHAP (SHapley Additive exPlanation) values on the test set.  SHAP values are very reliable metrics for determining the importance of features to the model's predictions and help to explain the decisions made by models such as BikeSafePA.  In particular, in which directions (and with what magnitudes) do individual features push the model's predictions?
+### Interpreting BikeSaferPA based on SHAP values
+We computed SHAP (SHapley Additive exPlanation) values on the test set.  SHAP values are very reliable metrics for determining the importance of features to the model's predictions and help to explain the decisions made by models such as BikeSaferPA.  In particular, in which directions (and with what magnitudes) do individual features push the model's predictions?
 
 <figure>
 <img src="shap.png" width="70%">
-    <figcaption align="center">Plots showing SHAP values for various features in the BikeSafePA model.  Only the 20 features with larges mean absolute SHAP values are shown.</figcaption>
+    <figcaption align="center">Plots showing SHAP values for various features in the BikeSaferPA model.  Only the 20 features with larges mean absolute SHAP values are shown.</figcaption>
 </figure>
 
-*Note: the following statements should not be interpreted as inferring causality; rather, they are statements about how conditioning on certain factors affects the expected prediction of BikeSafePA!*
+*Note: the following statements should not be interpreted as inferring causality; rather, they are statements about how conditioning on certain factors affects the expected prediction of BikeSaferPA!*
 
-Based on SHAP values, we can conclude that the probability that BikeSafePA will predict that a cyclist suffered serious injury or fatality in a collision...
+Based on SHAP values, we can conclude that the probability that BikeSaferPA will predict that a cyclist suffered serious injury or fatality in a collision...
 * ...increases steadily with the age of the cyclist
 * ...increases steadily with the posted speed limit
 * ...steadily increases with how recent the crash is
@@ -111,9 +111,9 @@ Based on SHAP values, we can conclude that the probability that BikeSafePA will 
 * ...is on average lower when the collision involves an aggressive driving behavior, but may be higher or lower depending on the type of aggressive driving behavior
 * ...is not increased by wearing a bicycle helmet at moderate to high speeds
 
-### Policy recommendations based on BikeSafePA results
+### Policy recommendations based on BikeSaferPA results
 
-Based on the results of BikeSafePA's SHAP values, I would recommend the following actions to be taken in an effort to reduce the incidence of serious cyclist injury and cyclist fatality (as well as cyclist crashes in general) in Pennsylvania:
+Based on the results of BikeSaferPA's SHAP values, I would recommend the following actions to be taken in an effort to reduce the incidence of serious cyclist injury and cyclist fatality (as well as cyclist crashes in general) in Pennsylvania:
 
 1. Increasing cyclist education efforts regarding:
     * Safer riding practices around trucks and commercial vehicles
