@@ -1,6 +1,6 @@
 # BikeSaferPA: predicting outcomes for cyclists using Pennsylvania crash data, 2002-2021
  
-## Introduction to BikeSaferPA project
+## Introduction to the BikeSaferPA project
 
 In this project we'll create and evaluate **BikeSaferPA**, a machine learning model which will be designed to predict whether a cyclist in a crash in Pennsylvania will suffer serious injury or fatality as a result.  We focus on a publically accessible dataset of crash records in the state during the period of 2002-2021, made available by Pennsylvania Department of Transportation (PENNDOT).
 
