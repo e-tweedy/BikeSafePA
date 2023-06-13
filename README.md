@@ -139,4 +139,4 @@ Based on the results of BikeSaferPA's SHAP values, I would recommend the followi
         * routes with higher posted speed limits and/or where motor vehicle speeding is very prevalent
         * routes with significant use by heavy trucks and/or commercial vehicles
         * routes that are used heavily during the weekday morning and evening commutes
-5. Invest in research to investigate reason(s) for the increasing prevalence of serious injury or fatality among cyclists in collisions during the period of 2002-2021.  If this trend continues, cyclists in PA will be in much more danger in the future!
+5. Investing in research to investigate reason(s) for the increasing prevalence of serious injury or fatality among cyclists in collisions during the period of 2002-2021.  If this trend continues, cyclists in PA will be in much more danger in the future!
