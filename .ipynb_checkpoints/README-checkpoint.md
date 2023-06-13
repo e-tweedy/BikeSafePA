@@ -1,4 +1,4 @@
-# BikeSaferPA: a predictive model based on Pennsylvania crash data, 2002-2021
+# BikeSaferPA: predicting outcomes for cyclists using Pennsylvania crash data, 2002-2021
  
 ## Introduction to BikeSaferPA project
 
