@@ -87,7 +87,7 @@ The ROC-AUC score is computed based on how the model's predicted probabilities a
 When trained on the entire training set and scored on the holdout test set, BikeSaferPA attains ROC-AUC score of around 0.72.  Using the classification threshold values we selected in the parameter tuning phase, the model correctly classifies 68% of cyclists in the test set who suffered serious injury or fatality, and correctly classifies 64% of those who didn't.  We set the threshold to optimize the $F_3$ score, a variant of the $F_1$ score which views recall as three times as important as precision; adjusting it further could produce variants which are better at identifying cyclists at risk of serious injury or death, but they would also accumulate more false positives.  The end-user of BikeSaferPA should adjust its classification threshold to accomodate the needs of their particular use case.
 
 ### Interpreting BikeSaferPA based on SHAP values
-We computed SHAP (SHapley Additive exPlanation) values on the test set.  SHAP values are very reliable metrics for determining the importance of features to the model's predictions and help to explain the decisions made by models such as BikeSaferPA.  In particular, in which directions (and with what magnitudes) do individual features push the model's predictions?
+We computed SHAP (SHapley Additive exPlanation) values on the test set.  SHAP values are very reliable metrics for determining the importance of features to the model's predictions and help to explain the decisions made by models such as BikeSaferPA.
 
 <figure>
 <img src="shap.png" width="70%">
@@ -96,20 +96,23 @@ We computed SHAP (SHapley Additive exPlanation) values on the test set.  SHAP va
 
 *Note: the following statements should not be interpreted as inferring causality; rather, they are statements about how conditioning on certain factors affects the expected prediction of BikeSaferPA!*
 
-Based on SHAP values, we can conclude that the probability that BikeSaferPA will predict that a cyclist suffered serious injury or fatality in a collision...
-* ...increases steadily with the age of the cyclist
-* ...increases steadily with the posted speed limit
-* ...steadily increases with how recent the crash is
-* ...is significantly higher when the collision is speeding-related
-* ...is significantly higher when the collision involves a drinking driver
-* ...is significantly higher when the collision involves a truck, SUV, van, or commercial vehicle
-* ...is significantly higher when the collision is head-on or rear-end, and lower for sideswipe collisions
-* ...is higher when the cyclist is male
-* ...is higher when the collision occurs midblock between intersections, on a hill, on a curved roadway, in a rural setting, or in dark unlit conditions
-* ...is higher when it involves a driver who has run a red light
-* ...is higher when the cyclist is both striking and struck
-* ...is on average lower when the collision involves an aggressive driving behavior, but may be higher or lower depending on the type of aggressive driving behavior
-* ...is not increased by wearing a bicycle helmet at moderate to high speeds
+Based on SHAP values, we can conclude the following about BikeSaferPA's predicted probability that a cyclist suffered serious injury or fatality:
+* An older cyclists's age pushes it up, and the strength of the push increases with age
+* A higher speed limit pushes it up, and the strength of the push increases with speed limit
+* The year being recent pushes it up, and that effect has been growing since 2016
+* A male cyclist's gender pushes it up
+* The following factors push it up strongly:
+    * The collision being speeding-related, alcohol-related, or drug-related, or on a hill
+    * The presence of a drinking driver, a truck, a SUV, or a commercial vehicle
+    * The collision being head-on or rear-end
+* The following factors push it up somewhat:
+    * The collision being midblock, on a curved road,in a rural setting, or in dark unlit conditions
+    * The collision involving a driver running a red light
+    * The cyclist is both striking and struck in the collision
+* The following factors push it down:
+    * The collision is a sideswipe, either same or opposite direction
+    * The collision involves an aggressive driving behavior (besides the aforementioned ones that push it up)
+    * The cyclist is not wearing a helmet; this effect is possibly driven somewhat by their increased likelihood to be younger and riding in lower speed zones
 
 ### Policy recommendations based on BikeSaferPA results
 
