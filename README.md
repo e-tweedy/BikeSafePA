@@ -16,16 +16,21 @@ The PENNDOT dataset, as well as related resources such as a data dictionary, can
 
 The project repository consists of the following components:
 1. Three IPython files in the main directory:
-    * 1_BikeSaferPA_data.ipynb : A notebook which demonstrates the acquisition and cleaning of the dataset.
-    * 2_BikeSaferPA_vis.ipynb : A notebook in which the data is analyzed and visualized in order to uncover patterns and inspire actions which might improve outcomes for cyclists.
-    * 3_BikeSaferPA_models.ipynb : A notebook which demonstrates the development of the BikeSaferPA model.
-2. 'data' folder with the following subfolders:
+    * '1_BikeSaferPA_data.ipynb' : A notebook which demonstrates the acquisition and cleaning of the dataset.
+    * '2_BikeSaferPA_vis.ipynb' : A notebook in which the data is analyzed and visualized in order to uncover patterns and inspire actions which might improve outcomes for cyclists.
+    * '3_BikeSaferPA_models.ipynb' : A notebook which demonstrates the development of the BikeSaferPA model.
+2. 'data' directory with the following subdirectories:
     * 'raw_csv' : a directory containing four .CSV files which are processed in '1_BikeSaferPA_data.ipynb'
         * 'bicycles_raw.csv' : samples correspond to bicycle vehicles involved in crash events
         * 'crashes_raw.csv' : samples correspond to crash events
         * 'persons_raw.csv' : samples correspond to individuals riding bicycles involved in crash events
         * 'roadway_raw.csv' : samples correspond to roadways related to crash events
      * 'zip' : a directory intended to hold .ZIP files, if you choose to download them from the original PENNDOT page
+3. 'lib' directory containing Python modules:
+	* 'get_data.py' : contains functions for data extraction used in '1_BikeSaferPA_data.ipynb'
+	* 'vis_data.py' : contains functions for data visualization used in '2_BikeSaferPA_vis.ipynb'
+	* 'transform_data.py' : contains functions for data transformation used in '3_BikeSaferPA_models.ipynb'
+	* 'study_classif.py' : contains classes used to study classifier pipelines in '3_BikeSaferPA_models.ipynb'
 3. Two data files in main directory, which are the output from '1_BikeSaferPA_data.ipynb':
     * 'cyclists.csv' : samples correspond to individuals riding bicycles involved in crash events
     * 'crashes.csv' : samples correspond to crash events
