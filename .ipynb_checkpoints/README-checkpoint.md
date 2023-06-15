@@ -1,5 +1,7 @@
 # BikeSaferPA: predicting outcomes for cyclists using Pennsylvania crash data, 2002-2021
  
+For best rendering results, view these notebooks on [NBViewer](https://nbviewer.org/github/e-tweedy/BikeSaferPA/tree/main/).
+ 
 ## Introduction to the BikeSaferPA project
 
 Which factors most dramatically impact a cyclist's risk of suffering serious injury or death in a crash?
