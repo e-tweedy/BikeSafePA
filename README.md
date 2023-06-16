@@ -1,5 +1,10 @@
 # BikeSaferPA: predicting outcomes for cyclists using Pennsylvania crash data, 2002-2021
- 
+
+View the project notebooks as HTML files:
+* [Part I: Data acquisition and cleaning](https://e-tweedy.github.io/1_BikeSaferPA_data.html)
+* [Part II: Data exploration and visualization](https://e-tweedy.github.io/2_BikeSaferPA_vis.html)
+* [Part III: Desiging the BikeSaferPA model](https://e-tweedy.github.io/3_BikeSaferPA_models.html)
+
 ## Introduction to the BikeSaferPA project
 
 Which factors most dramatically impact a cyclist's risk of suffering serious injury or death in a crash?
