@@ -12,7 +12,7 @@ To address these questions I've build **BikeSaferPA**, a machine learning model 
 
 The central goals of this project were to examine the prevalence of various aspects of vehicle crashes involving bicycles in Pennsylvania, analyze how these factors might affect the severity of the crash from the cyclist's point of view, and build the BikeSafePA model to both make predictions and better understand the influence of these factors.
 
-The PENNDOT dataset, as well as related resources such as a data dictionary, can be found (https://pennshare.maps.arcgis.com/apps/webappviewer/index.html?id=8fdbf046e36e41649bbfd9d7dd7c7e7e).
+The PENNDOT dataset, as well as related resources such as a data dictionary, can be found [at this link](https://pennshare.maps.arcgis.com/apps/webappviewer/index.html?id=8fdbf046e36e41649bbfd9d7dd7c7e7e)
 
 ## Repository contents:
 
