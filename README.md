@@ -1,7 +1,5 @@
 # BikeSaferPA: predicting outcomes for cyclists using Pennsylvania crash data, 2002-2021
  
-For best rendering results, view these notebooks on [NBViewer](https://nbviewer.org/github/e-tweedy/BikeSaferPA/tree/main/).
- 
 ## Introduction to the BikeSaferPA project
 
 Which factors most dramatically impact a cyclist's risk of suffering serious injury or death in a crash?
@@ -84,7 +82,7 @@ I examined several logistic regression and gradient boosted decision tree models
 * A LogisticRegression model with only L2-regularization and C-value (the inverse of the regularization strength) roughly equal to 0.053.
 * A HistGradientBoostingClassifer model (for its computational speed) with learning rate = 0.142, max tree depth of 2, minimum samples per leaf of 140, and L2 regularization parameter around 2.4; all other hyperparameters were left at defualt values.  I set the number of iterations to be very large, and used early stopping to end our training.
 
-The ROC-AUC score is computed based on how the model's predicted probabilities affect the true positive and true negative rates at all possible prediction thresholds, and so optimizing the AUC doesn't on its own provide a choice for the best prediction threshold.  I selected prediction thresholds for both models which optiized the $F_3$ score, a variant of the classical $F_1$ score which considers recall of the positive class (serious cyclist injury or cyclist fatality) as three times as important as important as recall of the negative class.
+The ROC-AUC score is computed based on how the model's predicted probabilities affect the true positive and true negative rates at all possible prediction thresholds, and so optimizing the AUC doesn't on its own provide a choice for the best prediction threshold.  I selected prediction thresholds for both models which optiized the $F_3$ score, a variant of the classical $F_1$ score which considers recall (of the positive class) as three times as important as precision.
 
 ##### Selecting the BikeSaferPA model
 
