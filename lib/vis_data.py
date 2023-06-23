@@ -136,7 +136,9 @@ def plot_month_series(df):
 	-------
 	"""
 	# Create string feature DATE of the form 'MM-YYYY'
-	df['DATE'] = (df['CRASH_MONTH'].astype('str')+'-'+df['CRASH_YEAR'].astype('str')).astype('datetime64')
+	df['DATE'] = pd.to_datetime((df['CRASH_MONTH'].astype('str')\
+                                         +'-'+df['CRASH_YEAR'].astype('str')),
+                                       format = "%m-%Y")
 	df=df.sort_values(by='DATE')
 	df['DATE']=df['DATE'].astype('str').apply(lambda x: x.rsplit('-',1)[0])
 	
