@@ -476,7 +476,7 @@ def feat_perc_comp(feat,df,feat_name=None,cohort_name = None,merge_inj_death=Tru
     caption = f'Breakdown of {feat_name} among cyclist groups'
     return perc_comp.reset_index().style.set_table_attributes("style='display:inline'")\
                                     .format(format_dict).bar(color='powderblue',
-                                    subset=table_columns).hide_index().set_caption(caption)\
+                                    subset=table_columns).hide().set_caption(caption)\
                                     .set_table_styles(styles)
 
 def gray_empty(val):
