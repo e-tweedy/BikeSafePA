@@ -397,31 +397,86 @@ def feat_perc(feat, df, col_name = 'percentage', feat_name = None):
     else:
         perc.index.name=feat
     return perc
-    
+
+def feat_perc_bar(feat,df,feat_name=None,cohort_name=None,show_fig=True,return_fig=False,sort=False):
+    """
+    Makes barplot of two series:
+        - distribution of feature among all cyclists
+        - distribution of feature among cyclists with serious injury or fatality
+
+    Parameters:
+    -----------
+    feat : str
+        The column name of the desired feature
+    df : pd.DataFrame
+        The input dataframe
+    feat_name : str or None
+        The feature name to use in the
+        x-axis label.  If None, will use feat
+    cohort_name : str or None
+        qualifier to use in front of 'cyclists'
+        in titles, if provided, e.g. 'rural cyclists'
+    show_fig : bool
+        whether to finish with fig.show()
+    return_fig : bool
+        whether to return the fig object
+    sort : bool
+        whether to sort bars. If False, will use default sorting
+        by category name or feature value.  If True, will resort
+        in descending order by percentage
+
+    Returns: figure or None
+    --------
+    """
+    if feat_name is None:
+        feat_name=feat
+    df_inj = df.query('SERIOUS_OR_FATALITY==1')
+    table = feat_perc(feat,df)
+    table.loc[:,'cohort']='all'
+    ordering = list(table['percentage'].sort_values(ascending=False).index) if sort else None
+    table_inj = feat_perc(feat,df_inj)
+    table_inj.loc[:,'cohort']='seriously injured or killed'
+    table = pd.concat([table,table_inj],axis=0).reset_index()
+    category_orders = {'cohort':['all','seriously injured or killed']}
+    if sort:
+        category_orders[feat]=ordering
+    fig = px.bar(table,y='cohort',x='percentage',color=feat,
+                 barmode='stack',text_auto='.1%',
+                category_orders=category_orders)
+    fig.update_yaxes(tickangle=-90)
+    fig.update_xaxes(tickformat=".0%")
+    if show_fig:
+        fig.show()
+    if return_fig:
+        return fig
+
 def feat_perc_comp(feat,df,feat_name=None,cohort_name = None,merge_inj_death=True):
     """
-    Returnes a styled dataframe (Styler object) 'perc_comp'
+    Returns a styled dataframe (Styler object)
     whose underlying dataframe has three columns
     containing value counts of 'feat' among:
     - all cyclists involved in crashes
     - cyclists suffering serious injury or fatality
     each formatted as percentages of the series sum.
     Styled with bars comparing percentages
-    Inputs:
-    - 'df' is cyclists by default, but can be changed
-    e.g. if you want to filter the samples
-    - 'feat' if the desired feature to use
-    - 'feat_name' is the index name
-    of the output dataframe if provided, otherwise
-    will use 'feat' as index name.
-    - 'cohort_name' is a qualifier in front
-    of "cyclists" in titles, if provided
-    (e.g. "urban")
-    - if merge_inj_death is set to False,
-    then cyclists suffering serious injury and
-    the cyclists suffering fatality will be separated
-    into separate columns (three total columns)
-    
+
+    Parameters:
+    -----------
+    feat : str
+        The column name of the desired feature
+    df : pd.DataFrame
+        The input dataframe
+    feat_name : str or None
+        The feature name to use in the output dataframe
+        index name.  If None, will use feat
+    cohort_name : str or None
+        qualifier to use in front of 'cyclists'
+        in titles, if provided, e.g. 'rural cyclists'
+    merge_inj_death : bool
+        whether to merge seriously injured and killed cohorts
+    Returns:
+    --------
+    perc_comp : pd.Styler object
     """
     # Need qualifier for titles if restricting cyclist cohort
     qualifier = cohort_name if cohort_name is not None else ''
