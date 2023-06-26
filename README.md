@@ -1,5 +1,7 @@
 # BikeSaferPA: predicting outcomes for cyclists using Pennsylvania crash data, 2002-2021
 
+#### [Try the BikeSaferPA web app!](https://bike-safer-pa.streamlit.app/)
+
 View the project notebooks as HTML files:
 * [Part I: Data acquisition and cleaning](https://e-tweedy.github.io/1_BikeSaferPA_data.html)
 * [Part II: Data exploration and visualization](https://e-tweedy.github.io/2_BikeSaferPA_vis.html)
