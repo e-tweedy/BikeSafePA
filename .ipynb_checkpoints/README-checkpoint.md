@@ -1,5 +1,12 @@
 # BikeSaferPA: predicting outcomes for cyclists using Pennsylvania crash data, 2002-2021
- 
+
+#### [Try the BikeSaferPA web app!](https://bike-safer-pa.streamlit.app/)
+
+View the project notebooks as HTML files:
+* [Part I: Data acquisition and cleaning](https://e-tweedy.github.io/1_BikeSaferPA_data.html)
+* [Part II: Data exploration and visualization](https://e-tweedy.github.io/2_BikeSaferPA_vis.html)
+* [Part III: Desiging the BikeSaferPA model](https://e-tweedy.github.io/3_BikeSaferPA_models.html)
+
 ## Introduction to the BikeSaferPA project
 
 Which factors most dramatically impact a cyclist's risk of suffering serious injury or death in a crash?
@@ -93,7 +100,7 @@ The ROC-AUC score is computed based on how the model's predicted probabilities a
     <figcaption align="center">The ROC curve, confusion matrix, and classification report for the BikeSaferPA model.</figcaption>
 </figure>
     
-When trained on the entire training set and scored on the holdout test set, BikeSaferPA attains ROC-AUC score of around 0.72.  Using the classification threshold values I selected in the parameter tuning phase, the model correctly classifies 76% of cyclists in the test set who suffered serious injury or fatality, and correctly classifies 56% of those who didn't.  I set the threshold to optimize the $F_3$ score, a variant of the $F_1$ score which views recall as three times as important as precision; adjusting it further could produce variants which are better at identifying cyclists at risk of serious injury or death, but they would also accumulate more false positives.  The end-user of BikeSaferPA should adjust its classification threshold to accomodate the needs of their particular use case.
+When trained on the entire training set and scored on the holdout test set, BikeSaferPA attains ROC-AUC score of around 0.72.  Using the classification threshold values I selected in the parameter tuning phase, the model correctly classifies 74% of cyclists in the test set who suffered serious injury or fatality, and correctly classifies 57% of those who didn't.  I set the threshold to optimize the $F_3$ score, a variant of the $F_1$ score which views recall as three times as important as precision; adjusting it further could produce variants which are better at identifying cyclists at risk of serious injury or death, but they would also accumulate more false positives.  The end-user of BikeSaferPA should adjust its classification threshold to accomodate the needs of their particular use case.
 
 ### Interpreting BikeSaferPA based on SHAP values
 I computed SHAP (SHapley Additive exPlanation) values on the test set.  SHAP values are very reliable metrics for determining the importance of features to the model's predictions and help to explain the decisions made by models such as BikeSaferPA.
