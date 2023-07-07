@@ -112,36 +112,39 @@ I computed SHAP (SHapley Additive exPlanation) values on the test set.  SHAP val
 
 *Note: the following statements should not be interpreted as inferring causality; rather, they are statements about how conditioning on certain factors affects the expected prediction of BikeSaferPA!*
 
-Based on SHAP values, I drew several conclusions about BikeSaferPA's predicted probability that a cyclist suffered serious injury or fatality:
+Based on SHAP values, I can conclude the following about BikeSaferPA's predicted probability that a cyclist suffered serious injury or fatality:
 * An older cyclists's age pushes it up, and the strength of the push increases with age
 * A higher speed limit pushes it up, and the strength of the push increases with speed limit
 * The year being recent pushes it up, and that effect has been growing since 2016
 * A male cyclist's gender pushes it up
 * The following factors push it up strongly:
     * The collision being speeding-related, alcohol-related, or drug-related, or on a hill
-    * The presence of a drinking driver, a truck, a SUV, or a commercial vehicle
-    * The collision being head-on or rear-end
-* The following factors push it up somewhat:
-    * The collision being midblock, on a curved road,in a rural setting, or in dark unlit conditions
-    * The collision involving a driver running a red light
-    * The cyclist is both striking and struck in the collision
+    * The presence of a drinking driver, a heavy truck, or a commercial vehicle
+* The following factors push it up moderately:
+    * The collision involving a small truck, SUV, or van
+    * The collision involving a driver running a red light or meeting the NHTSA aggressive driving standard
+    * The collision being on a curved road, in a rural setting, in dark unlit conditions, or at midblock
+    * The collision being head on, or the cyclist being both striking and struck in the collision, or the cyclist having impact side rear right or front left
+* The following factors push it up a little:
+    * The cyclist having impact side right or left, or the collision being rear end
+    * The collision being in an urbanized setting
 * The following factors push it down:
-    * The collision is a sideswipe, either same or opposite direction
-    * The collision involves an aggressive driving behavior (besides the aforementioned ones that push it up)
+    * The collision is a sideswipe, either same or opposite direction - by far seem to be the least dangerous collision types for cyclists
+    * The cyclist having impact side front right or front
+    * The collision involves an aggressive driving behavior, especially a driver proceeding without clearance from a stop - not that several aforementioned aggressive driving behaviors push it up
     * The cyclist is not wearing a helmet; this effect is possibly driven somewhat by their increased likelihood to be younger and riding in lower speed zones
 
 ### Policy recommendations based on BikeSaferPA results
 
-Based on the results of BikeSaferPA's SHAP values, I would recommend the following actions to be taken in an effort to reduce the incidence of serious cyclist injury and cyclist fatality (as well as cyclist crashes in general) in Pennsylvania:
+Based on the results of BikeSaferPA's SHAP values, I recommend the following actions to be taken in an effort to reduce the incidence of serious cyclist injury and cyclist fatality (as well as cyclist crashes in general) in Pennsylvania:
 
-1. Increasing cyclist education efforts regarding:
-    * Safer riding practices around trucks and commercial vehicles
-    * Choosing routes with lower posted speed limits when possible
-    * Visibility measures for low light riding conditions - reflectors, reflective clothing, headlights, taillights
-    * The serious risk resulting from dangerous cyclist behavior:
-        * Speeding, running stop signs, or running traffic lights
-        * Wrong-way riding, as head-on collisions are the most likely type to result in severe injury or death
-    
+1. Increased attention to regulatory and enforcement efforts for motorists and motor vehicles:
+    * Increased enforcement of speeding, driving a motor vehicle while impaired, and running red lights.
+    * Attention to regulatory issues involving trucks, SUVs, commercial vehicles, and vans, such as:
+        * The number of these vehicles sharing the roads with cyclists
+        * The speeds at which these vehicles travel
+        * Possible safety certifications required to drive such vehicles
+        * Required features in such vehicles that may contribute to cyclist safety
 2. Increasing education efforts for private motorists and commercial vehicle drivers involving:
     * The serious risk resulting from several dangerous types of driver behavior:
         * Driving while under the influence of drugs or alcohol
@@ -151,11 +154,17 @@ Based on the results of BikeSaferPA's SHAP values, I would recommend the followi
         * Driving in areas with higher posted speed limits
         * Driving during high-traffic times,e.g. morning and evening weekday commuting hours
         * Navigating curved roadways and hilly roadways
-3. Increasing enforcement of speeding, driving a motor vehicle while impaired, and running red lights and stop signs.
-4. Investing in infrastructure improvements:
+3. Investing in infrastructure improvements:
     * Upgrading and/or repairing roadway lighting in areas where cyclists frequent, especially on midblock stretches and areas of roadway with curves, hills, in rural settings, and areas with higher posted speed limits.
     * Adding protected bicycle lanes/routes along roads commonly used by bicyclists, with a focus on:
         * routes with higher posted speed limits and/or where motor vehicle speeding is very prevalent
         * routes with significant use by heavy trucks and/or commercial vehicles
         * routes that are used heavily during the weekday morning and evening commutes
+4. Increasing cyclist education efforts regarding:
+    * Safer riding practices around trucks and commercial vehicles
+    * Choosing routes with lower posted speed limits when possible
+    * Visibility measures for low light riding conditions - reflectors, reflective clothing, headlights, taillights
+    * The serious risk resulting from dangerous cyclist behavior:
+        * Speeding, running stop signs, or running traffic lights
+        * Wrong-way riding, as head-on collisions are the most likely type to result in severe injury or death
 5. Investing in research to investigate reason(s) for the increasing prevalence of serious injury or fatality among cyclists in collisions during the period of 2002-2021.  If this trend continues, cyclists in PA will be in much more danger in the future!
