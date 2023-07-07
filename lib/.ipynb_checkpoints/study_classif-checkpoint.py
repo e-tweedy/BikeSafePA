@@ -632,7 +632,7 @@ class ClassifierStudy():
         self.X_shap = X_train_trans
         self.y_shap = y_train
             
-    def shap_plot(self,max_display='all'):
+    def shap_plot(self,max_display='all',save_fig = False):
         """
         Method for generating plots of SHAP value results
         SHAP values should be already computed previously
@@ -645,6 +645,8 @@ class ClassifierStudy():
             The number of features to show in the plot, in descending
             order by mean absolute SHAP value.  If 'all', then
             all features will be included.
+        save_fig : bool
+            Whether to safe the figure
             
         Returns: None (plots displayed)
         --------
@@ -676,6 +678,9 @@ class ClassifierStudy():
             ax.set_ylabel('feature name',fontsize='x-small')
             ax.tick_params(axis='y', labelsize='xx-small')
         plt.tight_layout()
+        if save_fig:
+            filename = 'shap' if max_display=='all' else f'shap_top{max_display}'
+            plt.savefig(filename)
         plt.show()
     
     def find_best_threshold(self,beta=1,conf=True,report=True, print_result=True):
