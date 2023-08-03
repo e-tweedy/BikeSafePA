@@ -85,9 +85,9 @@ This encoding was automated via a model pipeline.
 
 ##### Hyperparameter tuning
 
-I examined several logistic regression and gradient boosted decision tree models with a wide variety of hyperparameter settings.  After tuning hyperparameters to optimize ROC-AUC score via randomized search with five-fold cross validation, our two best models were:
+I examined several logistic regression and gradient boosted decision tree models with a wide variety of hyperparameter settings.  After tuning hyperparameters to optimize ROC-AUC score via randomized search with five-fold cross validation, the two best models were:
 * A LogisticRegression model with only L2-regularization and C-value (the inverse of the regularization strength) roughly equal to 0.053.
-* A HistGradientBoostingClassifer model (for its computational speed) with learning rate = 0.142, max tree depth of 2, minimum samples per leaf of 140, and L2 regularization parameter around 2.4; all other hyperparameters were left at defualt values.  I set the number of iterations to be very large, and used early stopping to end our training.
+* A LGBMClassifer model (for its computational speed) with learning rate = 0.09, 162 boosting steps, max tree depth of 5, minimum samples per leaf of 170, and L1 and L2 regularization parameters around 6.54 and 1.77, respectively; all other hyperparameters were left at defualt values.
 
 The ROC-AUC score is computed based on how the model's predicted probabilities affect the true positive and true negative rates at all possible prediction thresholds, and so optimizing the AUC doesn't on its own provide a choice for the best prediction threshold.  I selected prediction thresholds for both models which optiized the $F_3$ score, a variant of the classical $F_1$ score which considers recall (of the positive class) as three times as important as precision.
 
@@ -100,7 +100,7 @@ The ROC-AUC score is computed based on how the model's predicted probabilities a
     <figcaption align="center">The ROC curve, confusion matrix, and classification report for the BikeSaferPA model.</figcaption>
 </figure>
     
-When trained on the entire training set and scored on the holdout test set, BikeSaferPA attains ROC-AUC score of around 0.72.  Using the classification threshold values I selected in the parameter tuning phase, the model correctly classifies 74% of cyclists in the test set who suffered serious injury or fatality, and correctly classifies 57% of those who didn't.  I set the threshold to optimize the $F_3$ score, a variant of the $F_1$ score which views recall as three times as important as precision; adjusting it further could produce variants which are better at identifying cyclists at risk of serious injury or death, but they would also accumulate more false positives.  The end-user of BikeSaferPA should adjust its classification threshold to accomodate the needs of their particular use case.
+When trained on the entire training set and scored on the holdout test set, BikeSaferPA attains ROC-AUC score of around 0.72.  Using the classification threshold values I selected in the parameter tuning phase, the model correctly classifies 75% of cyclists in the test set who suffered serious injury or fatality, and correctly classifies 56% of those who didn't.  I set the threshold to optimize the $F_3$ score, a variant of the $F_1$ score which views recall as three times as important as precision; adjusting it further could produce variants which are better at identifying cyclists at risk of serious injury or death, but they would also accumulate more false positives.  The end-user of BikeSaferPA should adjust its classification threshold to accomodate the needs of their particular use case.
 
 ### Interpreting BikeSaferPA based on SHAP values
 I computed SHAP (SHapley Additive exPlanation) values on the test set.  SHAP values are very reliable metrics for determining the importance of features to the model's predictions and help to explain the decisions made by models such as BikeSaferPA.
@@ -119,19 +119,18 @@ Based on SHAP values, I can conclude the following about BikeSaferPA's predicted
 * A male cyclist's gender pushes it up
 * The following factors push it up strongly:
     * The collision being speeding-related, alcohol-related, or drug-related, or on a hill
-    * The presence of a drinking driver, a heavy truck, or a commercial vehicle
+    * The presence of a heavy truck or a commercial vehicle
 * The following factors push it up moderately:
     * The collision involving a small truck, SUV, or van
-    * The collision involving a driver running a red light or meeting the NHTSA aggressive driving standard
+    * The collision involving a drinking driver
     * The collision being on a curved road, in a rural setting, in dark unlit conditions, or at midblock
-    * The collision being head on, or the cyclist being both striking and struck in the collision, or the cyclist having impact side rear right or front left
+    * The collision being head on, or the cyclist being both striking and struck in the collision, or the cyclist having impact side front left
 * The following factors push it up a little:
     * The cyclist having impact side right or left, or the collision being rear end
-    * The collision being in an urbanized setting
 * The following factors push it down:
     * The collision is a sideswipe, either same or opposite direction - by far seem to be the least dangerous collision types for cyclists
-    * The cyclist having impact side front right or front
-    * The collision involves an aggressive driving behavior, especially a driver proceeding without clearance from a stop - not that several aforementioned aggressive driving behaviors push it up
+    * The cyclist having impact side front, rear, or front right
+    * The collision involves an aggressive driving behavior, especially a driver proceeding without clearance from a stop
     * The cyclist is not wearing a helmet; this effect is possibly driven somewhat by their increased likelihood to be younger and riding in lower speed zones
 
 ### Policy recommendations based on BikeSaferPA results
