@@ -11,7 +11,6 @@ from sklearn.preprocessing import OneHotEncoder, OrdinalEncoder, StandardScaler,
 from sklearn.decomposition import PCA
 from sklearn.linear_model import LogisticRegression
 from sklearn.ensemble import HistGradientBoostingClassifier, GradientBoostingClassifier
-from xgboost import XGBClassifier
 from lightgbm import LGBMClassifier
 from imblearn.over_sampling import RandomOverSampler
 from sklearn.base import BaseEstimator, TransformerMixin, clone
@@ -465,7 +464,7 @@ class ClassifierStudy():
         X_train = X_train[[feat for feat_type in self.features for feat in self.features[feat_type]]]
         
         # If LGBM early stopping, then need to split off eval_set and define fit_params
-        if isinstance(self.pipe[-1],XGBClassifier):
+        if isinstance(self.pipe[-1],LGBMClassifier):
             if self.pipe[-1].get_params()['early_stopping_round'] is not None:
                 X_train,X_es,y_train,y_es = train_test_split(X_train,y_train,
                                                                test_size=eval_size,
@@ -620,7 +619,7 @@ class ClassifierStudy():
         X_test = X_test[[feat for feat_type in self.features for feat in self.features[feat_type]]]
         
         # If LGBM early stopping, then need to split off eval_set and define fit_params
-        if isinstance(self.pipe[-1],XGBClassifier):
+        if isinstance(self.pipe[-1],LGBMClassifier):
             if self.pipe[-1].get_params()['early_stopping_round'] is not None:
                 X_train,X_es,y_train,y_es = train_test_split(X_train,y_train,
                                                                test_size=eval_size,
