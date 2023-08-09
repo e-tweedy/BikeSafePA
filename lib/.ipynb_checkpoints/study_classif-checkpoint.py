@@ -296,6 +296,8 @@ class ClassifierStudy():
                         lgb_es=True
 
         scores = []
+        if lgb_es:
+            es_num_it = []
         # Iterate over folds and train, predict, score
         for i,(train_idx,test_idx) in enumerate(kf.split(X,self.y)):
             fold_X_train = X.iloc[train_idx,:]
@@ -315,15 +317,14 @@ class ClassifierStudy():
                 fit_params = {
                     f'{clf_name}__eval_set':eval_set,
                     f'{clf_name}__eval_metric':eval_metric,
-                    f'{clf_name}__verbose':0,
+                    # f'{clf_name}__verbose':0,
                 }
             else:
                 fit_params = {}
             
             pipe.fit(fold_X_train,fold_y_train,**fit_params)
             if lgb_es:
-                best_it = pipe[-1].best_iteration_
-                print(f'Eval set metric stopped improving after {best_it} iterations.')
+                es_num_it.append(pipe[-1].best_iteration_)
             fold_y_pred_proba = pipe.predict_proba(fold_X_test)[:,1]
             
             if scoring == 'roc_auc':
@@ -342,6 +343,8 @@ class ClassifierStudy():
         
         # Average and report
         mean_score = np.mean(scores)
+        if lgb_es:
+            print(f'Number of iterations used due to early stopping: \nMin:{np.min(es_num_it):.1f}...Max:{np.max(es_num_it):.1f}...Mean:{np.mean(es_num_it):.1f}')
         if print_scores:
             print(f'CV scores using {scoring} score: {scores} \nMean score: {mean_score}')
         if print_mean_score:
@@ -465,8 +468,9 @@ class ClassifierStudy():
         
         # If LGBM early stopping, then need to split off eval_set and define fit_params
         if isinstance(self.pipe[-1],LGBMClassifier):
-            if self.pipe[-1].get_params()['early_stopping_round'] is not None:
-                X_train,X_es,y_train,y_es = train_test_split(X_train,y_train,
+            if 'early_stopping_round' in self.pipe[-1].get_params():
+                if self.pipe[-1].get_params()['early_stopping_round'] is not None:
+                    X_train,X_es,y_train,y_es = train_test_split(X_train,y_train,
                                                                test_size=eval_size,
                                                                stratify=y_train,
                                                                random_state=self.random_state)
@@ -476,7 +480,8 @@ class ClassifierStudy():
                 clf_name = self.pipe.steps[-1][0]
                 fit_params = {f'{clf_name}__eval_set':[(X_es,y_es)],
                               f'{clf_name}__eval_metric':eval_metric,
-                             f'{clf_name}__verbose':0}
+                             # f'{clf_name}__verbose':0
+                             }
             else:
                 fit_params = {}
         else:
@@ -620,8 +625,9 @@ class ClassifierStudy():
         
         # If LGBM early stopping, then need to split off eval_set and define fit_params
         if isinstance(self.pipe[-1],LGBMClassifier):
-            if self.pipe[-1].get_params()['early_stopping_round'] is not None:
-                X_train,X_es,y_train,y_es = train_test_split(X_train,y_train,
+            if 'early_stopping_round' in self.pipe[-1].get_params():
+                if self.pipe[-1].get_params()['early_stopping_round'] is not None:
+                    X_train,X_es,y_train,y_es = train_test_split(X_train,y_train,
                                                                test_size=eval_size,
                                                                stratify=y_train,
                                                                random_state=self.random_state)
@@ -631,7 +637,8 @@ class ClassifierStudy():
                 clf_name = self.pipe.steps[-1][0]
                 fit_params = {f'{clf_name}__eval_set':[(X_es,y_es)],
                               f'{clf_name}__eval_metric':eval_metric,
-                             f'{clf_name}__verbose':0}
+                             # f'{clf_name}__verbose':0
+                             }
             else:
                 fit_params = {}
         else:
